@@ -7,6 +7,7 @@
     <groupId>StarkTan</groupId>
     <artifactId>Blockchain</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <description>Basic Prototype</description>
     <build>
         <plugins>
             <plugin>
