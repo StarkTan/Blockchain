@@ -26,6 +26,9 @@ public class Block {
     //时间戳
     private long timestamp;
 
+    //工作量证明计时器
+    private long nonce;
+
 
     private Block(String hash, String preHash, String data, long timestamp) {
         this.hash = hash;
@@ -36,7 +39,10 @@ public class Block {
 
     public static Block newBlock(String preHash, String data) {
         Block block = new Block("", preHash, data, Instant.now().getEpochSecond());
-        block.setHash();
+        ProofOfWork pow = ProofOfWork.newProofOfWork(block);
+        PowResult powResult = pow.run();
+        block.setHash(powResult.getHash());
+        block.setNonce(powResult.getNonce());
         return block;
     }
 

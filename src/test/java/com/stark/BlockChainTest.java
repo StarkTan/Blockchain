@@ -10,7 +10,10 @@ public class BlockChainTest {
             System.out.println("PreHash: " + block.getPreHash());
             System.out.println("Data: " + block.getData());
             System.out.println("Hash: " + block.getHash());
-            System.out.println();
+            System.out.println("Nonce: " + block.getNonce());
+
+            ProofOfWork proofOfWork = ProofOfWork.newProofOfWork(block);
+            System.out.println("Pow valid: " + proofOfWork.validate() + "\n");
         }
     }
 }
