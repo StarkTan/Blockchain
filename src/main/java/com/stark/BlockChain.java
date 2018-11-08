@@ -1,40 +1,42 @@
 package com.stark;
 
-import com.stark.utils.ByteUtils;
+import lombok.Getter;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
-//区块链
+/**
+ * 区块链模型
+ */
 public class BlockChain {
 
-    //这里暂时只用一个List就OK
-    private List<Block> blocks;
+    @Getter
+    private List<Block> blockList = new LinkedList<>();
 
-    public BlockChain() {
-        blocks = new ArrayList<>();
-        //添加初始块
-        blocks.add(new Block("Genesis Block".getBytes(), new byte[]{}));
+    private void addBlock(Block block) {
+        blockList.add(block);
     }
 
-    public void addBlock(byte[] data) {
-        if (data == null || data.length == 0) {
-            throw new RuntimeException("data can't be empty");
-        }
-        Block preBlock = blocks.get(blocks.size() - 1);
-        blocks.add(new Block(data, preBlock.getHash()));
+    /**
+     * 添加区块数据
+     */
+    public void addBlock(String data) {
+        Block preBlock = blockList.get(blockList.size() - 1);
+        addBlock(Block.newBlock(preBlock.getHash(), data));
     }
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        for (Block block : blocks) {
-            sb.append("================\n");
-            sb.append("data : ").append(new String(block.getData())).append("\n");
-            sb.append("preHash : ").append(ByteUtils.byte2Hex(block.getPrevBlockHash())).append("\n");
-            sb.append("hash : ").append(ByteUtils.byte2Hex(block.getHash())).append("\n");
-        }
-        sb.append("length : ").append(blocks.size());
-        return sb.toString();
+    /**
+     * 创建创世区块
+     */
+    private static Block newGenesisBlock() {
+        return Block.newBlock("", "Genesis Block");
     }
+
+    public static BlockChain newBlockChain() {
+        BlockChain blockChain = new BlockChain();
+        blockChain.addBlock(newGenesisBlock());
+        return blockChain;
+    }
+
+
 }

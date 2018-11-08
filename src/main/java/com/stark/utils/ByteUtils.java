@@ -1,23 +1,28 @@
 package com.stark.utils;
 
+import org.apache.commons.lang3.ArrayUtils;
+
+import java.nio.ByteBuffer;
+import java.util.Arrays;
+import java.util.stream.Stream;
+
 public class ByteUtils {
+
     /**
-     * 将byte转为16进制
-     *
-     * @param bytes
-     * @return
+     * 将多个字节数组合并成一个字节数组
      */
-    public static String byte2Hex(byte[] bytes) {
-        StringBuilder sb = new StringBuilder();
-        String temp;
-        for (byte aByte : bytes) {
-            temp = Integer.toHexString(aByte & 0xFF);
-            if (temp.length() == 1) {
-                //1得到一位的进行补0操作
-                sb.append("0");
-            }
-            sb.append(temp);
+    public static byte[] meger(byte[]... bytes) {
+        Stream<Byte> stream = Stream.of();
+        for (byte[] b : bytes) {
+            stream = Stream.concat(stream, Arrays.stream(ArrayUtils.toObject(b)));
         }
-        return sb.toString();
+        return ArrayUtils.toPrimitive(stream.toArray(Byte[]::new));
+    }
+
+    /**
+     * long 转化成byte[]
+     */
+    public static byte[] toBytes(long val) {
+        return ByteBuffer.allocate(Long.BYTES).putLong(val).array();
     }
 }
