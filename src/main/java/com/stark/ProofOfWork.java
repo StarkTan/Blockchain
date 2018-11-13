@@ -38,7 +38,6 @@ public class ProofOfWork {
     public PowResult run() {
         long nonce = 0;
         String shaHex = "";
-        System.out.printf("Mining the block containing: %s \n", block.getData());
         long startTime = System.currentTimeMillis();
         while (nonce < Long.MAX_VALUE) {
             byte[] data = prepareData(nonce);
@@ -69,7 +68,7 @@ public class ProofOfWork {
         }
         return ByteUtils.meger(
                 preHashBytes,
-                getBlock().getData().getBytes(),
+                getBlock().hashTransaction(),
                 ByteUtils.toBytes(getBlock().getTimestamp()),
                 ByteUtils.toBytes(TARGET_BITS),
                 ByteUtils.toBytes(nonce)

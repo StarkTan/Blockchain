@@ -7,7 +7,7 @@
     <groupId>StarkTan</groupId>
     <artifactId>Blockchain</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <description>transaction</description>
+    <description>Transaction UTXO</description>
     <build>
         <plugins>
             <plugin>
